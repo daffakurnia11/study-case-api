@@ -5,3 +5,7 @@ export const LoginUrl = () => `/login/`;
 export const LogoutUrl = () => `/logout/`;
 
 export const ProductUrl = () => `/product/`;
+
+export const ProductUpdateUrl = () => `/product/update`;
+
+export const ProductDeleteUrl = (id) => `/product/${id}`;

@@ -39,3 +39,25 @@ export async function ProductListApi() {
       return error;
     });
 }
+
+export async function ProductUpdateApi(data) {
+  return await axios
+    .post(url.ProductUpdateUrl(), data)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export async function ProductDeleteApi(id) {
+  return await axios
+    .delete(url.ProductDeleteUrl(id))
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
