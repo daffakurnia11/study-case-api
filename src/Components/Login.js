@@ -1,15 +1,18 @@
 import { Button, Card, Form, Input, Layout, Spin } from "antd";
 import React, { useState } from "react";
 import { LoginApi } from "../apis/api";
+import { useSetAtom } from "jotai";
+import { loginData } from "../store";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
+  const setUserData = useSetAtom(loginData);
   const onFinish = (values) => {
     setLoading(true);
     LoginApi(values).then((resp) => {
       setLoading(false);
       if (resp.status === 200) {
-        console.log(resp.data.data);
+        setUserData(resp.data.data);
       }
     });
   };
