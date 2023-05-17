@@ -1,21 +1,16 @@
-import { Layout, Space } from "antd";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Components/Login";
+import Dashboard from "./Components/Dashboard";
 import "./css/style.css";
 
 function App() {
   return (
-    <Space
-      direction="vertical"
-      style={{
-        width: "100vw",
-      }}
-    >
-      <Layout>
-        <Layout.Content>
-          <Login />
-        </Layout.Content>
-      </Layout>
-    </Space>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Dashboard />} exact />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
