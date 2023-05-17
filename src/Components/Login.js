@@ -13,6 +13,7 @@ export default function Login() {
       style={{
         display: "flex",
         flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
       }}
