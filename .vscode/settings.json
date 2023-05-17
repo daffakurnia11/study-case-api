@@ -1,3 +1,6 @@
 {
-  "conventionalCommits.scopes": ["login"]
+  "conventionalCommits.scopes": [
+    "login",
+    "dashboard"
+  ]
 }

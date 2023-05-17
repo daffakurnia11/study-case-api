@@ -28,3 +28,14 @@ export async function LogoutApi(data) {
       return error;
     });
 }
+
+export async function ProductListApi() {
+  return await axios
+    .get(url.ProductUrl())
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}

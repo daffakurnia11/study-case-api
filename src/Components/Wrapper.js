@@ -79,6 +79,7 @@ export default function Dashboard() {
                   style={{
                     background: "white",
                     minHeight: 200,
+                    padding: "16px 24px",
                   }}
                 >
                   <Outlet />
