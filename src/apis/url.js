@@ -1,3 +1,5 @@
-export const baseURL = () => "https://test.employee.tokoweb.xyz";
+export const baseURL = () => "https://test.employee.tokoweb.xyz/api";
 
-export const LoginUrl = () => `/api/login/`;
+export const LoginUrl = () => `/login/`;
+
+export const LogoutUrl = () => `/logout/`;

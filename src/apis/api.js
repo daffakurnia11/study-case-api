@@ -13,3 +13,18 @@ export async function LoginApi(data) {
       return error;
     });
 }
+
+export async function setAuthToken(accessToken) {
+  return (axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`);
+}
+
+export async function LogoutApi(data) {
+  return await axios
+    .post(url.LogoutUrl(), data)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
