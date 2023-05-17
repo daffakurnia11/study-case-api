@@ -1,9 +1,17 @@
-import { Button, Card, Form, Input, Layout } from "antd";
-import React from "react";
+import { Button, Card, Form, Input, Layout, Spin } from "antd";
+import React, { useState } from "react";
+import { LoginApi } from "../apis/api";
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
   const onFinish = (values) => {
-    console.log("Success:", values);
+    setLoading(true);
+    LoginApi(values).then((resp) => {
+      setLoading(false);
+      if (resp.status === 200) {
+        console.log(resp.data.data);
+      }
+    });
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -29,35 +37,41 @@ export default function Login() {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
+          <Spin spinning={loading}>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Email harus diisi!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Password harus diisi!",
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ width: "100%" }}
+              >
+                Login
+              </Button>
+            </Form.Item>
+          </Spin>
         </Form>
       </Card>
     </Layout>
