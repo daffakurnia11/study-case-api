@@ -40,6 +40,17 @@ export async function ProductListApi() {
     });
 }
 
+export async function ProductDetailApi(id) {
+  return await axios
+    .get(url.ProductShowUrl(id))
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
 export async function ProductCreateApi(data) {
   return await axios
     .post(url.ProductCreateUrl(), data)

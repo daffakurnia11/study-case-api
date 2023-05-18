@@ -3,14 +3,17 @@ import {
   Empty,
   Form,
   Input,
+  Modal,
   Popconfirm,
+  Spin,
   Table,
   Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import {
   ProductDeleteApi,
+  ProductDetailApi,
   ProductListApi,
   ProductUpdateApi,
 } from "../../apis/api";
@@ -18,7 +21,10 @@ import { Link } from "react-router-dom";
 
 export default function List() {
   const [productList, setProductList] = useState([]);
+  const [productDetail, setProductDetail] = useState({});
   const [loading, setLoading] = useState(false);
+  const [modalLoading, setModalLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState(""); // Store edited key data
@@ -47,6 +53,26 @@ export default function List() {
       ...record,
     });
     setEditingKey(record.id);
+  };
+
+  // Show handler
+  const show = (id) => {
+    setIsModalOpen(true);
+    setModalLoading(true);
+    ProductDetailApi(id).then((resp) => {
+      setModalLoading(false);
+      if (resp.status === 200) {
+        setProductDetail(resp.data.data);
+      }
+    });
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+    setProductDetail({});
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setProductDetail({});
   };
 
   // Cancel edit handler
@@ -153,6 +179,15 @@ export default function List() {
                 <EditOutlined />
               </Typography.Text>
             </Button>
+            <Button
+              type="text"
+              onClick={() => show(record.id)}
+              style={{ padding: "0 8px" }}
+            >
+              <Typography.Text type="secondary">
+                <EyeOutlined />
+              </Typography.Text>
+            </Button>
           </>
         );
       },
@@ -234,6 +269,45 @@ export default function List() {
           loading={loading}
         />
       </Form>
+
+      <Modal
+        title={productDetail?.name}
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        {modalLoading ? (
+          <div
+            style={{
+              width: "100%",
+              height: 300,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Spin spinning={modalLoading} tip="Loading" size="large" />
+          </div>
+        ) : (
+          <>
+            {productDetail?.image_url ? (
+              <img src={productDetail?.image_url} alt="gambar produk" />
+            ) : (
+              <Empty />
+            )}
+            <Typography.Title level={5}>{productDetail?.name}</Typography.Title>
+            <Typography.Paragraph>{productDetail?.price}</Typography.Paragraph>
+            <Typography.Paragraph style={{ color: "darkgray", margin: 0 }}>
+              Dibuat pada :{" "}
+              {new Date(productDetail?.created_at).toLocaleString()}
+            </Typography.Paragraph>
+            <Typography.Paragraph style={{ color: "darkgray", margin: 0 }}>
+              Terakhir Diubah:{" "}
+              {new Date(productDetail?.updated_at).toLocaleString()}
+            </Typography.Paragraph>
+          </>
+        )}
+      </Modal>
     </>
   );
 }
