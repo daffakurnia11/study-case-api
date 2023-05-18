@@ -14,6 +14,7 @@ import {
   ProductListApi,
   ProductUpdateApi,
 } from "../../apis/api";
+import { Link } from "react-router-dom";
 
 export default function List() {
   const [productList, setProductList] = useState([]);
@@ -216,6 +217,11 @@ export default function List() {
   return (
     <>
       <Form form={form}>
+        <Link to={"/create"}>
+          <Button type="primary" style={{ marginBottom: 16 }}>
+            Tambah Produk
+          </Button>
+        </Link>
         <Table
           components={{
             body: {
